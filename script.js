@@ -18,7 +18,7 @@ const observer = new IntersectionObserver((entries) => {
       observer.unobserve(entry.target);
     }
   });
-}, { threshold: 0.16 });
+}, { threshold: 0.15 });
 
 revealItems.forEach((item) => observer.observe(item));
 
@@ -29,7 +29,7 @@ if (siteHeader || heroImage) {
       siteHeader.classList.toggle("scrolled", y > 24);
     }
     if (heroImage) {
-      heroImage.style.transform = `scale(1.04) translateY(${Math.min(y * 0.04, 18)}px)`;
+      heroImage.style.transform = `scale(1.03) translateY(${Math.min(y * 0.035, 16)}px)`;
     }
   }, { passive: true });
 }
@@ -37,13 +37,12 @@ if (siteHeader || heroImage) {
 filters.forEach((button) => {
   button.addEventListener("click", () => {
     const filter = button.dataset.filter;
-    filters.forEach((item) => item.classList.remove("is-active"));
+    filters.forEach((el) => el.classList.remove("is-active"));
     button.classList.add("is-active");
 
-    galleryItems.forEach((card) => {
-      const category = card.dataset.category;
-      const visible = filter === "all" || category === filter;
-      card.classList.toggle("hidden", !visible);
+    galleryItems.forEach((item) => {
+      const visible = filter === "all" || item.dataset.category === filter;
+      item.classList.toggle("hidden", !visible);
     });
   });
 });
@@ -52,9 +51,8 @@ galleryItems.forEach((item) => {
   item.addEventListener("click", () => {
     const image = item.querySelector("img");
     const caption = item.querySelector("figcaption");
-    if (!image || !lightbox || !lightboxImage || !lightboxCaption) {
-      return;
-    }
+    if (!image || !lightbox || !lightboxImage || !lightboxCaption) return;
+
     lightboxImage.src = image.src;
     lightboxImage.alt = image.alt;
     lightboxCaption.textContent = caption ? caption.textContent : "";
@@ -71,11 +69,8 @@ if (lightbox && lightboxClose) {
 
   lightboxClose.addEventListener("click", closeLightbox);
   lightbox.addEventListener("click", (event) => {
-    if (event.target === lightbox) {
-      closeLightbox();
-    }
+    if (event.target === lightbox) closeLightbox();
   });
-
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && lightbox.classList.contains("open")) {
       closeLightbox();
@@ -86,6 +81,6 @@ if (lightbox && lightboxClose) {
 if (contactForm && formStatus) {
   contactForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    formStatus.textContent = "Danke. Anfrage im Vorschau-Modus gespeichert. Auf Wunsch wird der Live-Versand als naechster Schritt angebunden.";
+    formStatus.textContent = "Danke. Ihre Anfrage wurde in der Vorschau gespeichert. Live-Versand kann als naechster Schritt angebunden werden.";
   });
 }
