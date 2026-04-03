@@ -1,4 +1,5 @@
-// script.js
+
+// script.js (unverändert, weiterhin passend)
 const revealItems = document.querySelectorAll("[data-reveal]");
 const siteHeader = document.getElementById("siteHeader");
 const heroImage = document.querySelector(".hero-image");
